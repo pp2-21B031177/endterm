@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from datetime import date
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
+    groups = models.CharField(default='')
+    user_permissions = models.CharField(default='')
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -12,7 +15,7 @@ class Product(models.Model):
 
 class CreditCard(models.Model):
     number = models.CharField(max_length=16)
-    expirationDate = models.DateField()
+    expirationDate = models.DateField(default=date(2024, 1, 1))
     CVC = models.CharField(max_length=3)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='credit_cards')
 
